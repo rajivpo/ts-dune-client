@@ -129,8 +129,9 @@ export class DuneClient {
         parameters,
       )}`,
     );
-    const { execution_id: jobID } = await this.execute(queryID, parameters);
-    let { state } = await this.getStatus(jobID);
+    const executionResult = await this.execute(queryID, parameters);
+    const { execution_id: jobID } = executionResult;
+    let { state } = executionResult;
     while (!TERMINAL_STATES.includes(state)) {
       log.info(
         logPrefix,
